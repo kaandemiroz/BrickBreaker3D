@@ -21,13 +21,12 @@ public class BlockMatrix extends TransformGroup{
 	 * @param matrixY
 	 * @param matrixZ 
 	 */
-	public BlockMatrix(int matrixX, int matrixY, int matrixZ){
+	public BlockMatrix(int matrixX, int matrixY, int matrixZ, float x, float y, float z){
 		super();
-		setCollidable(true);
 		transform = new Transform3D();
-		transform.setTranslation(new Vector3f(-matrixX * Constants.BLOCK_WIDTH,
-										0.3f + matrixY * Constants.BLOCK_HEIGHT,
-											  -matrixZ * Constants.BLOCK_DEPTH	));
+		transform.setTranslation(new Vector3f(	x - matrixX * Constants.BLOCK_WIDTH,
+												y + matrixY * Constants.BLOCK_HEIGHT,
+												z - matrixZ * Constants.BLOCK_DEPTH	));
 		blockMatrix = new Block[matrixZ][matrixY][matrixX];
 		this.matrixX = matrixX;
 		this.matrixY = matrixY;

@@ -80,16 +80,17 @@ public class BrickBreaker extends Applet implements KeyListener, MouseMotionList
 		Appearance bap = new Appearance();
 		bap.setMaterial(new Material(gray, black, gray, white, 30.0f));
 		
-		walls = new Walls(2.0f, 2.0f, 2.0f, 0.05f, wap);
+		walls = new Walls(1.0f, 1.0f, 0.5f, 0.05f, wap);
 
 		blockMatrix = new BlockMatrix(	Constants.BLOCK_COUNT_X,
 				Constants.BLOCK_COUNT_Y,
-				Constants.BLOCK_COUNT_Z);
+				Constants.BLOCK_COUNT_Z,
+				0.0f, 0.4f, 0.0f);
 
 		tepsi = new Tepsi(	Constants.TEPSI_WIDTH,
 				Constants.TEPSI_HEIGHT,
 				Constants.TEPSI_DEPTH,
-				0.0f, -0.35f, 0.0f,
+				0.0f, -0.4f, 0.0f,
 				tap	);
 
 		ball = new Ball(	Constants.BALL_RADIUS,
@@ -105,7 +106,7 @@ public class BrickBreaker extends Applet implements KeyListener, MouseMotionList
 
 //		CollisionBehavior collisionBehavior = new CollisionBehavior(group, ball, ball.getAppearance(), ball.getTranslation(),ballDelta);
 //		collisionBehavior.setSchedulingBounds(blockMatrix.getBounds());
-		Collision collision = new Collision(ball.getObject(), ball.getBounds(), this);
+		Collision collision = new Collision(ball.getObject(), blockMatrix.getBounds(), this);
 		
 		group.addChild(collision);
 
@@ -282,20 +283,20 @@ public class BrickBreaker extends Applet implements KeyListener, MouseMotionList
 
 	@Override
 	public void onCollision(Bounds ballBounds, Bounds objectBounds) {
-		System.out.println("Moved whilst colliding");
+		System.out.println("Moved whilst colliding" + ball.getTranslation());
 	}
 
 	@Override
 	public void onCollisionStart(Bounds ballBounds, Bounds objectBounds) {
 		System.out.println("Collided");
-		System.out.println("ballBounds: " + ballBounds);
+		System.out.println("ballBounds: " + ball.getTranslation());
 		System.out.println("objectBounds: " + objectBounds);
 	}
 
 	@Override
 	public void onCollisionEnd(Bounds ballBounds, Bounds objectBounds) {
 		System.out.println("Stopped colliding");
-		System.out.println("ballBounds: " + ballBounds);
+		System.out.println("ballBounds: " + ball.getTranslation());
 		System.out.println("objectBounds: " + objectBounds);
 	}
 

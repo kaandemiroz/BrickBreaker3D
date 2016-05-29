@@ -8,15 +8,14 @@ import com.sun.j3d.utils.geometry.Primitive;
  * @author sawyera.2016
  */
 public class Collision extends Behavior {
-	
-	/** The separate criteria used to wake up this behavior. */
-	protected WakeupCriterion[] theCriteria;
 
 	/** The OR of the separate criteria. */
 	protected WakeupOr orCriteria;
 
 	/** The shape that is watched for collision. */
 	protected Primitive collidingShape;
+	protected Bounds bounds1;
+	protected Bounds bounds2;
 
 	protected CollisionListener collisionListener;
 	
@@ -39,7 +38,7 @@ public class Collision extends Behavior {
 	 */
 	@Override
 	public void initialize() {
-		theCriteria = new WakeupCriterion[3];
+		WakeupCriterion[] theCriteria = new WakeupCriterion[3];
 		theCriteria[0] = new WakeupOnCollisionEntry(collidingShape);
 		theCriteria[1] = new WakeupOnCollisionExit(collidingShape);
 		theCriteria[2] = new WakeupOnCollisionMovement(collidingShape);

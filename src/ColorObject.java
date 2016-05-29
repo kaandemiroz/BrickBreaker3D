@@ -21,7 +21,7 @@ public class ColorObject extends TransformGroup{
 		super();
 		setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		this.object = object;
-		this.object.setCollidable(true);
+		setCollidable(true);
 		ap = this.object.getAppearance();
 		transform = new Transform3D();
 		transform.setTranslation(translation);
