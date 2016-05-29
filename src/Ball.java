@@ -1,5 +1,3 @@
-import java.util.Random;
-
 import javax.media.j3d.*;
 import javax.vecmath.Vector3f;
 
@@ -12,8 +10,6 @@ import com.sun.j3d.utils.geometry.Sphere;
 public class Ball extends ColorObject{
 	
 	private float radius;
-	private float delta = Constants.BALL_SPEED;
-	private float theta = 225 + new Random().nextFloat()*90;
 	
 	/**
 	 * @param translation
@@ -22,7 +18,7 @@ public class Ball extends ColorObject{
 	 */
 	public Ball(float radius, Vector3f translation, Appearance ap){
 		super(new Sphere(radius,ap), translation);
-		this.radius = radius;
+		this.setRadius(radius);
 	}
 	
 	/**
@@ -45,6 +41,20 @@ public class Ball extends ColorObject{
 				curPosition.getY() + delta.getY(),
 				curPosition.getZ() + delta.getZ());
 		setTranslation(newPosition);
+	}
+
+	/**
+	 * @return the radius
+	 */
+	public float getRadius() {
+		return radius;
+	}
+
+	/**
+	 * @param radius the radius to set
+	 */
+	public void setRadius(float radius) {
+		this.radius = radius;
 	}
 
 }
