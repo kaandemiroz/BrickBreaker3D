@@ -4,8 +4,8 @@ import javax.media.j3d.*;
 import com.sun.j3d.utils.geometry.Primitive;
 
 /**
- * Collision Detection
- * @author sawyera.2016
+ * @author OKD
+ *
  */
 public class Collision extends Behavior {
 
@@ -37,26 +37,19 @@ public class Collision extends Behavior {
 		wExit = new WakeupOnCollisionExit(group);
 		wakeupOn(wEnter);
 	}
-
-	/**
-	 * Where the work is done in this class. A message is printed out using the
-	 * userData of the object collided with. The wake up condition is then set
-	 * to the OR'ed criterion again.
-	 */
+	
 	@Override
 	public void processStimulus(@SuppressWarnings("rawtypes") Enumeration criteria) {
 		WakeupCriterion theCriterion = (WakeupCriterion) criteria.nextElement();
 		if (theCriterion instanceof WakeupOnCollisionEntry) {
 			Node theLeaf = ((WakeupOnCollisionEntry) theCriterion)
 					.getTriggeringPath().getObject();
-//			System.out.println("Collided with " + theLeaf.getUserData());
-			collisionListener.onCollisionStart(theLeaf.getParent().getParent().getParent(), theLeaf.getBounds());
+			collisionListener.onCollisionStart(theLeaf.getParent().getParent().getParent(), theLeaf);
 			wakeupOn(wExit);
 		} else {
 			Node theLeaf = ((WakeupOnCollisionExit) theCriterion)
 					.getTriggeringPath().getObject();
-//			System.out.println("Stopped colliding with  " + theLeaf.getUserData());
-			collisionListener.onCollisionEnd(theLeaf.getParent().getParent().getParent(), theLeaf.getBounds());
+			collisionListener.onCollisionEnd(theLeaf.getParent().getParent().getParent(), theLeaf);
 			wakeupOn(wEnter);
 		}
 	}

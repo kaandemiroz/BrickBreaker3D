@@ -34,7 +34,6 @@ public interface Constants {
 	static final int FROM_RIGHT = 4;
 	static final int FROM_FRONT = 5;
 	static final int FROM_BACK = 6;
-	static final int REFRESH_RATE = 15;
-	static final int TIMER_GAP = 15;
+	static final int TIMER_GAP = 3;
 	static final int TEPSI_NUM_SEGMENTS = 9;
 }

@@ -29,7 +29,7 @@ public class BlockMatrix extends TransformGroup{
 		setCapability(Group.ALLOW_CHILDREN_WRITE);
 		transform = new Transform3D();
 		transform.setTranslation(new Vector3f(	x - matrixX * Constants.BLOCK_WIDTH,
-												y + matrixY * Constants.BLOCK_HEIGHT,
+												y - matrixY * Constants.BLOCK_HEIGHT,
 												z - matrixZ * Constants.BLOCK_DEPTH	));
 		blockMatrix = new Block[matrixZ][matrixY][matrixX];
 		this.matrixX = matrixX;
@@ -48,7 +48,7 @@ public class BlockMatrix extends TransformGroup{
 													Constants.BLOCK_HEIGHT,
 													Constants.BLOCK_HEIGHT,
 													i * 2 * Constants.BLOCK_WIDTH,
-													-j * 2 * Constants.BLOCK_HEIGHT,
+													j * 2 * Constants.BLOCK_HEIGHT,
 													k * 2 * Constants.BLOCK_DEPTH,
 													ap);
 					addChild(blockMatrix[k][j][i]);

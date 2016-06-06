@@ -46,5 +46,26 @@ public class RectangularObject extends ColorObject{
 	public RectangularObject(Box box, float x, float y, float z) {
 		this(box, new Vector3f(x, y, z));
 	}
+	
+	/**
+	 * @return the width (X-dimensional size) of the object
+	 */
+	public float getWidth(){
+		return border.getXdimension();
+	}
+	
+	/**
+	 * @return the height (Y-dimensional size) of the object
+	 */
+	public float getHeight(){
+		return border.getYdimension();
+	}
+	
+	/**
+	 * @return the depth (Z-dimensional size) of the object
+	 */
+	public float getDepth(){
+		return border.getZdimension();
+	}
 
 }

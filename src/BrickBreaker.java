@@ -81,7 +81,7 @@ public class BrickBreaker extends Applet implements KeyListener, MouseMotionList
 		Appearance bap = new Appearance();
 		bap.setMaterial(new Material(gray, black, gray, white, 30.0f));
 
-		walls = new Walls(1.0f, 1.0f, 0.2f, 0.05f, wap);
+		walls = new Walls(0.8f, 1.0f, 0.1f, 0.05f, wap);
 
 		blockMatrix = new BlockMatrix(	Constants.BLOCK_COUNT_X,
 				Constants.BLOCK_COUNT_Y,
@@ -102,10 +102,6 @@ public class BrickBreaker extends Applet implements KeyListener, MouseMotionList
 		group.addChild(blockMatrix);
 		group.addChild(tepsi);
 		group.addChild(ball);
-
-		//		CollisionDetectorGroup cdGroup = new CollisionDetectorGroup(ball);
-		//		cdGroup.setSchedulingBounds(ball.getBounds());//new BoundingSphere(new Point3d(), 10000.0));
-		//		ball.addChild(cdGroup);
 
 		Collision collision = new Collision(ball, ball.getBounds(), this);
 
@@ -131,7 +127,7 @@ public class BrickBreaker extends Applet implements KeyListener, MouseMotionList
 	 */
 	public Transform3D lookTowardsOriginFrom(Point3d point){
 		Transform3D lookAt = new Transform3D();
-		Vector3d up = new Vector3d(point.x, point.y + 1, point.z);
+		Vector3d up = new Vector3d(point.getX(), point.getY() + 1, point.getZ());
 		lookAt.lookAt(point, new Point3d(0.0, 0.0, 0.0), up);
 		lookAt.invert();
 		return lookAt;
@@ -155,10 +151,10 @@ public class BrickBreaker extends Applet implements KeyListener, MouseMotionList
 
 		//		Random rand = new Random();
 		//		ballDelta = new Vector3f(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
-		ballDelta = new Vector3f(0.0005f,0.0025f,0.0001f);
+		ballDelta = new Vector3f(0.0005f,0.0005f,0.0005f);
 		timer = new Timer(Constants.TIMER_GAP, new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				//				ball.rotate(0.1);
+				//	ball.rotate(0.1);
 				ball.move(ballDelta);
 			}
 		});
@@ -263,47 +259,45 @@ public class BrickBreaker extends Applet implements KeyListener, MouseMotionList
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {	}
-
-
-	private int getCollisionDirection(ColorObject block){
-		float radius = ball.getRadius();
-		if(ball.getY() <= block.getY() + Constants.BLOCK_HEIGHT
-				&& getX() <= block.getX() + Constants.BLOCK_WIDTH 
-				&& getY() >= block.getY() + Constants.BLOCK_HEIGHT// - delta
-				&& getX()+2*radius >= block.getX())
-			return Constants.FROM_FRONT;
+	
+	private int getCollisionDirection(Node shape){
+		Box box = (Box) shape.getParent();
 		
-		else if(ball.getY() <= block.getY() + Constants.BLOCK_HEIGHT 
-				&& ball.getX()+2*radius <= block.getX()// + delta 
-				&& ball.getY()+2*radius >= block.getY()
-				&& ball.getX()+2*radius >= block.getX())
-			return Constants.FROM_LEFT;
-		
-		else if(ball.getY()+2*radius <= block.getY()// + delta
-				&& ball.getX() <= block.getX()+Constants.BLOCK_WIDTH 
-				&& ball.getY()+2*radius >= block.getY()
-				&& ball.getX()+2*radius >= block.getX())
-			return Constants.FROM_BACK;
-		
-		else if(ball.getY() <= block.getY() + Constants.BLOCK_HEIGHT 
-				&& ball.getX() <= block.getX() + Constants.BLOCK_WIDTH 
-				&& ball.getY()+2*radius >= block.getY()
-				&& ball.getX() >= block.getX() + Constants.BLOCK_WIDTH)// - delta){
-			return Constants.FROM_RIGHT;
-		
-		else if(ball.getY() <= block.getY() + Constants.BLOCK_HEIGHT 
-				&& ball.getX() <= block.getX() + Constants.BLOCK_WIDTH 
-				&& ball.getY()+2*radius >= block.getY()
-				&& ball.getX() >= block.getX() + Constants.BLOCK_WIDTH)// - delta){
-			return Constants.FROM_ABOVE;
-		
-		else if(ball.getY() <= block.getY() + Constants.BLOCK_HEIGHT 
-				&& ball.getX() <= block.getX() + Constants.BLOCK_WIDTH 
-				&& ball.getY()+2*radius >= block.getY()
-				&& ball.getX() >= block.getX() + Constants.BLOCK_WIDTH)// - delta){
-			return Constants.FROM_BELOW;
+		if(shape.getBounds().equals(box.getShape(Box.LEFT).getBounds())) return Constants.FROM_LEFT;
+		else if(shape.getBounds().equals(box.getShape(Box.RIGHT).getBounds())) return Constants.FROM_RIGHT;
+		else if(shape.getBounds().equals(box.getShape(Box.FRONT).getBounds())) return Constants.FROM_ABOVE;
+		else if(shape.getBounds().equals(box.getShape(Box.BACK).getBounds())) return Constants.FROM_BELOW;
+		else if(shape.getBounds().equals(box.getShape(Box.TOP).getBounds())) return Constants.FROM_BACK;
+		else if(shape.getBounds().equals(box.getShape(Box.BOTTOM).getBounds())) return Constants.FROM_FRONT;
 		
 		return 0;
+	}
+
+	@Override
+	public void onCollisionStart(Node group, Node shape) {
+		System.out.println("Collided, ballBounds: " + ball.getBounds());
+		System.out.println("objectBounds: " + shape.getBounds());
+		switch(getCollisionDirection(shape)){
+			case Constants.FROM_LEFT:
+			case Constants.FROM_RIGHT:
+				ballDelta.setX(-ballDelta.getX());
+				break;
+			case Constants.FROM_BACK:
+			case Constants.FROM_FRONT:
+				ballDelta.setY(-ballDelta.getY());
+				break;
+			case Constants.FROM_ABOVE:
+			case Constants.FROM_BELOW:
+				ballDelta.setZ(-ballDelta.getZ());
+				break;
+		}
+		if(group instanceof Block) blockMatrix.destroyBlock((Block) group);
+		else if(group instanceof Tepsi);
+	}
+
+	@Override
+	public void onCollisionEnd(Node node, Node shape) {
+		System.out.println("Stopped colliding, ballBounds: " + ball.getBounds() + "\n");
 	}
 
 	/**
@@ -316,40 +310,12 @@ public class BrickBreaker extends Applet implements KeyListener, MouseMotionList
 		object.frame = new MainFrame(object, args, (int)Constants.WIDTH, (int)Constants.HEIGHT);
 		object.frame.setAlwaysOnTop(true);
 		object.frame.setLocation(-Constants.BORDER_WIDTH,-Constants.BORDER_WIDTH);
-		//		object.frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+//		object.frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		object.frame.setResizable(false);
 		object.validate();
 
 		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 		object.frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0), "blank cursor"));
-	}
-
-	@Override
-	public void onCollisionStart(Node node, Bounds bounds) {
-		System.out.println("Collided");
-		System.out.println("ballBounds: " + ball.getBounds());
-		System.out.println("objectBounds: " + bounds);
-		switch(getCollisionDirection((ColorObject) node)){
-			case Constants.FROM_ABOVE:
-			case Constants.FROM_BELOW:
-				ballDelta.setZ(-ballDelta.getZ());
-				break;
-			case Constants.FROM_BACK:
-			case Constants.FROM_FRONT:
-				ballDelta.setY(-ballDelta.getY());
-				break;
-			case Constants.FROM_LEFT:
-			case Constants.FROM_RIGHT:
-				ballDelta.setX(-ballDelta.getX());
-				break;
-		}
-		if(node instanceof Block) blockMatrix.destroyBlock((Block) node);
-	}
-
-	@Override
-	public void onCollisionEnd(Node node, Bounds bounds) {
-		System.out.println("Stopped colliding");
-		System.out.println("ballBounds: " + ball.getBounds());
 	}
 
 }
