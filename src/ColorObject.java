@@ -65,6 +65,10 @@ public class ColorObject extends BranchGroup{
 		transform.setTranslation(vector);
 		tg.setTransform(transform);
 	}
+	
+	public TransformGroup getTransformGroup(){
+		return tg;
+	}
 
 	/**
 	 * @return the appearance of this object

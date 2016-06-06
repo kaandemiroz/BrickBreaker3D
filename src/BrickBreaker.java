@@ -81,7 +81,7 @@ public class BrickBreaker extends Applet implements KeyListener, MouseMotionList
 		Appearance bap = new Appearance();
 		bap.setMaterial(new Material(gray, black, gray, white, 30.0f));
 
-		walls = new Walls(0.8f, 1.0f, 0.1f, 0.05f, wap);
+		walls = new Walls(0.8f, 0.8f, 0.1f, 0.02f, wap);
 
 		blockMatrix = new BlockMatrix(	Constants.BLOCK_COUNT_X,
 				Constants.BLOCK_COUNT_Y,
@@ -151,7 +151,7 @@ public class BrickBreaker extends Applet implements KeyListener, MouseMotionList
 
 		//		Random rand = new Random();
 		//		ballDelta = new Vector3f(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
-		ballDelta = new Vector3f(0.0005f,0.0005f,0.0005f);
+		ballDelta = new Vector3f(0.0001f,0.0002f,0.0001f);
 		timer = new Timer(Constants.TIMER_GAP, new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				//	ball.rotate(0.1);
@@ -187,13 +187,13 @@ public class BrickBreaker extends Applet implements KeyListener, MouseMotionList
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		tepsi.setX((2*e.getX()/Constants.WIDTH - 1f) * 0.8f);
-		tepsi.setZ((0.5f - e.getY()/Constants.HEIGHT) * 0.5f);
+		tepsi.setZ((0.5f - e.getY()/Constants.HEIGHT) * 0.3f);
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		tepsi.setX((2*e.getX()/Constants.WIDTH - 1f) * 0.8f);
-		tepsi.setZ((0.5f - e.getY()/Constants.HEIGHT) * 0.5f);
+		tepsi.setZ((0.5f - e.getY()/Constants.HEIGHT) * 0.3f);
 	}
 
 	@Override
@@ -292,7 +292,6 @@ public class BrickBreaker extends Applet implements KeyListener, MouseMotionList
 				break;
 		}
 		if(group instanceof Block) blockMatrix.destroyBlock((Block) group);
-		else if(group instanceof Tepsi);
 	}
 
 	@Override

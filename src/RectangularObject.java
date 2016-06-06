@@ -29,12 +29,12 @@ public class RectangularObject extends ColorObject{
 		ca.setColor(0, 0, 0);
 		
 		ap.setLineAttributes(la = new LineAttributes());
-//		la.setLineAntialiasingEnable(true);
+		la.setLineAntialiasingEnable(true);
 		la.setLineWidth(2f);
 		
 		ap.setPolygonAttributes(pa = new PolygonAttributes());
 		pa.setPolygonMode(PolygonAttributes.POLYGON_LINE);
-//		addChild(border);
+		getTransformGroup().addChild(border);
 	}
 
 	/**

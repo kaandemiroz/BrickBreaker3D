@@ -7,7 +7,6 @@ import java.awt.Toolkit;
  */
 @SuppressWarnings("javadoc")
 public interface Constants {
-	
 
 	static final float SCALE = 1f;
 	static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -20,7 +19,7 @@ public interface Constants {
 	static final float BLOCK_DEPTH = BLOCK_HEIGHT;
 	static final float TEPSI_WIDTH = BLOCK_WIDTH * 4;
 	static final float TEPSI_HEIGHT = BLOCK_HEIGHT;
-	static final float TEPSI_DEPTH = BLOCK_DEPTH * 4;
+	static final float TEPSI_DEPTH = BLOCK_DEPTH * 3;
 	static final int BLOCK_COUNT_X = 15;
 	static final int BLOCK_COUNT_Y = 8;
 	static final int BLOCK_COUNT_Z = 3;
@@ -34,6 +33,7 @@ public interface Constants {
 	static final int FROM_RIGHT = 4;
 	static final int FROM_FRONT = 5;
 	static final int FROM_BACK = 6;
-	static final int TIMER_GAP = 3;
+	static final int TIMER_GAP = 1;
 	static final int TEPSI_NUM_SEGMENTS = 9;
+	
 }

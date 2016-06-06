@@ -7,7 +7,7 @@ import com.sun.j3d.utils.geometry.Box;
  * @author OKD
  *
  */
-public class Tepsi extends RectangularObject{
+public class Tepsi extends ColorObject{
 
 	private TransparencyAttributes ta;
 	private int numSegments;
@@ -24,7 +24,7 @@ public class Tepsi extends RectangularObject{
 		setNumSegments(Constants.TEPSI_NUM_SEGMENTS);
 		ap.setTransparencyAttributes(ta = new TransparencyAttributes());
 		ta.setTransparencyMode(TransparencyAttributes.BLENDED);
-		ta.setTransparency(0.4f);
+		ta.setTransparency(0.3f);
 	}
 
 	/**

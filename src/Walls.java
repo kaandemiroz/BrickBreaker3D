@@ -8,11 +8,11 @@ import com.sun.j3d.utils.geometry.Box;
 public class Walls extends TransformGroup{
 
 	private Transform3D transform;
-	private RectangularObject leftWall;
-	private RectangularObject rightWall;
-	private RectangularObject frontWall;
-	private RectangularObject floor;
-	private RectangularObject ceiling;
+	private ColorObject leftWall;
+	private ColorObject rightWall;
+	private ColorObject frontWall;
+	private ColorObject floor;
+	private ColorObject ceiling;
 	private TransparencyAttributes ta;
 	
 	/**
@@ -26,13 +26,13 @@ public class Walls extends TransformGroup{
 		super();
 		setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		ap.setTransparencyAttributes(ta = new TransparencyAttributes());
-		ta.setTransparencyMode(TransparencyAttributes.NICEST);
+		ta.setTransparencyMode(TransparencyAttributes.BLENDED);
 		ta.setTransparency(0.95f);
-		leftWall = new RectangularObject(new Box(wallWidth, roomHeight, roomDepth, ap), -roomWidth - wallWidth, 0, 0);
-		rightWall = new RectangularObject(new Box(wallWidth, roomHeight, roomDepth, ap), roomWidth + wallWidth, 0, 0);
-		frontWall = new RectangularObject(new Box(roomWidth, wallWidth, roomDepth, ap), 0, roomHeight + wallWidth, 0);
-		floor = new RectangularObject(new Box(roomWidth, roomHeight, wallWidth, ap), 0, 0, -roomDepth - wallWidth);
-		ceiling = new RectangularObject(new Box(roomWidth, roomHeight, wallWidth, ap), 0, 0, roomDepth + wallWidth);
+		leftWall = new ColorObject(new Box(wallWidth, roomHeight, roomDepth, ap), -roomWidth - wallWidth, 0, 0);
+		rightWall = new ColorObject(new Box(wallWidth, roomHeight, roomDepth, ap), roomWidth + wallWidth, 0, 0);
+		frontWall = new ColorObject(new Box(roomWidth, wallWidth, roomDepth, ap), 0, roomHeight + wallWidth, 0);
+		floor = new ColorObject(new Box(roomWidth, roomHeight, wallWidth, ap), 0, 0, -roomDepth - wallWidth);
+		ceiling = new ColorObject(new Box(roomWidth, roomHeight, wallWidth, ap), 0, 0, roomDepth + wallWidth);
 		transform = new Transform3D();
 		setTransform(transform);
 		addChild(leftWall);
