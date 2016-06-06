@@ -1,4 +1,8 @@
+import java.util.Enumeration;
+
 import javax.media.j3d.*;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
 import com.sun.j3d.utils.geometry.Sphere;

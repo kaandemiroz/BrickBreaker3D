@@ -18,6 +18,7 @@ public class Block extends RectangularObject{
 	 */
 	public Block(float width, float height, float depth, Vector3f translation, Appearance ap){
 		super(new Box(width, height, depth, ap), translation);
+		setCapability(BranchGroup.ALLOW_DETACH);
 	}
 
 	/**

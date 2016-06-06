@@ -20,9 +20,13 @@ public class BlockMatrix extends TransformGroup{
 	 * @param matrixX
 	 * @param matrixY
 	 * @param matrixZ 
+	 * @param x 
+	 * @param y 
+	 * @param z 
 	 */
 	public BlockMatrix(int matrixX, int matrixY, int matrixZ, float x, float y, float z){
 		super();
+		setCapability(Group.ALLOW_CHILDREN_WRITE);
 		transform = new Transform3D();
 		transform.setTranslation(new Vector3f(	x - matrixX * Constants.BLOCK_WIDTH,
 												y + matrixY * Constants.BLOCK_HEIGHT,
@@ -51,9 +55,15 @@ public class BlockMatrix extends TransformGroup{
 				}
 			}
 		}
+		
 		setTransform(transform);
 	}
 	
-	
+	/**
+	 * @param block
+	 */
+	public void destroyBlock(Block block){
+		removeChild(block);
+	}
 	
 }

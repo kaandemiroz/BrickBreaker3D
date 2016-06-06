@@ -9,41 +9,33 @@ import com.sun.j3d.utils.geometry.Primitive;
  */
 public class Collision extends Behavior {
 
-	/** The OR of the separate criteria. */
-	protected WakeupOr orCriteria;
-
-	/** The shape that is watched for collision. */
-	protected Primitive collidingShape;
-	protected Bounds bounds1;
-	protected Bounds bounds2;
-
 	protected CollisionListener collisionListener;
+	private Group group;
+
+	private WakeupOnCollisionEntry wEnter;
+	private WakeupOnCollisionExit wExit;
 	
 	/**
-	 * @param theShape
-	 *            Shape3D that is to be watched for collisions.
-	 * @param theBounds
+	 * @param cdGroup
+	 *            BranchGroup that is to be watched for collisions.
+	 * @param schedulingBounds
 	 *            Bounds that define the active region for this behavior
 	 * @param collisionListener 
 	 */
-	public Collision(Primitive theShape, Bounds theBounds, CollisionListener collisionListener) {
-		collidingShape = theShape;
+	public Collision(Group cdGroup, Bounds schedulingBounds, CollisionListener collisionListener) {
+		group = cdGroup;
 		this.collisionListener = collisionListener;
-		setSchedulingBounds(theBounds);
+		setSchedulingBounds(schedulingBounds);
 	}
 
 	/**
-	 * This creates an entry, exit and movement collision criteria. These are
-	 * then OR'ed together, and the wake up condition set to the result.
+	 * This creates an entry and exit collision criteria. The wake up condition is set to entry.
 	 */
 	@Override
 	public void initialize() {
-		WakeupCriterion[] theCriteria = new WakeupCriterion[3];
-		theCriteria[0] = new WakeupOnCollisionEntry(collidingShape);
-		theCriteria[1] = new WakeupOnCollisionExit(collidingShape);
-		theCriteria[2] = new WakeupOnCollisionMovement(collidingShape);
-		orCriteria = new WakeupOr(theCriteria);
-		wakeupOn(orCriteria);
+		wEnter = new WakeupOnCollisionEntry(group);
+		wExit = new WakeupOnCollisionExit(group);
+		wakeupOn(wEnter);
 	}
 
 	/**
@@ -58,19 +50,15 @@ public class Collision extends Behavior {
 			Node theLeaf = ((WakeupOnCollisionEntry) theCriterion)
 					.getTriggeringPath().getObject();
 //			System.out.println("Collided with " + theLeaf.getUserData());
-			collisionListener.onCollisionStart(collidingShape.getBounds(), theLeaf.getBounds());
-		} else if (theCriterion instanceof WakeupOnCollisionExit) {
+			collisionListener.onCollisionStart(theLeaf.getParent().getParent().getParent(), theLeaf.getBounds());
+			wakeupOn(wExit);
+		} else {
 			Node theLeaf = ((WakeupOnCollisionExit) theCriterion)
 					.getTriggeringPath().getObject();
 //			System.out.println("Stopped colliding with  " + theLeaf.getUserData());
-			collisionListener.onCollisionEnd(collidingShape.getBounds(), theLeaf.getBounds());
-		} else {
-			Node theLeaf = ((WakeupOnCollisionMovement) theCriterion)
-					.getTriggeringPath().getObject();
-//			System.out.println("Moved whilst colliding with " + theLeaf.getUserData());
-			collisionListener.onCollision(collidingShape.getBounds(), theLeaf.getBounds());
+			collisionListener.onCollisionEnd(theLeaf.getParent().getParent().getParent(), theLeaf.getBounds());
+			wakeupOn(wEnter);
 		}
-		wakeupOn(orCriteria);
 	}
 	
 }

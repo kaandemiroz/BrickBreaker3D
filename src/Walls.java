@@ -8,7 +8,6 @@ import com.sun.j3d.utils.geometry.Box;
 public class Walls extends TransformGroup{
 
 	private Transform3D transform;
-	private Appearance ap;
 	private ColorObject leftWall;
 	private ColorObject rightWall;
 	private ColorObject frontWall;
@@ -26,7 +25,6 @@ public class Walls extends TransformGroup{
 	public Walls(float roomWidth, float roomHeight, float roomDepth, float wallWidth, Appearance ap){
 		super();
 		setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		this.ap = ap;
 		ap.setTransparencyAttributes(ta = new TransparencyAttributes());
 		ta.setTransparencyMode(TransparencyAttributes.NICEST);
 		ta.setTransparency(0.9f);

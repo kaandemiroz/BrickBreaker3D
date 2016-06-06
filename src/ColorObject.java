@@ -7,8 +7,9 @@ import com.sun.j3d.utils.geometry.Primitive;
  * @author OKD
  *
  */
-public class ColorObject extends TransformGroup{
+public class ColorObject extends BranchGroup{
 
+	private TransformGroup tg;
 	private Transform3D transform;
 	private Primitive object;
 	private Appearance ap;
@@ -19,14 +20,16 @@ public class ColorObject extends TransformGroup{
 	 */
 	public ColorObject(Primitive object, Vector3f translation){
 		super();
-		setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		this.object = object;
 		setCollidable(true);
 		ap = this.object.getAppearance();
+		tg = new TransformGroup();
+		tg.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		transform = new Transform3D();
 		transform.setTranslation(translation);
-		setTransform(transform);
-		addChild(object);
+		tg.setTransform(transform);
+		tg.addChild(object);
+		addChild(tg);
 	}
 
 	/**
@@ -60,7 +63,7 @@ public class ColorObject extends TransformGroup{
 	 */
 	public void setTranslation(Vector3f vector){
 		transform.setTranslation(vector);
-		setTransform(transform);
+		tg.setTransform(transform);
 	}
 
 	/**
@@ -103,6 +106,27 @@ public class ColorObject extends TransformGroup{
 		Vector3f translation = getTranslation();
 		translation.setZ(z);
 		setTranslation(translation);
-	}  
+	}
+	
+	/**
+	 * @return
+	 */
+	public float getX(){
+		return getTranslation().getX();
+	}
+	
+	/**
+	 * @return
+	 */
+	public float getY(){
+		return getTranslation().getY();
+	}
+	
+	/**
+	 * @return
+	 */
+	public float getZ(){
+		return getTranslation().getZ();
+	}
 	
 }

@@ -1,4 +1,5 @@
 import javax.media.j3d.Bounds;
+import javax.media.j3d.Node;
 
 /**
  * @author OKD
@@ -7,21 +8,15 @@ import javax.media.j3d.Bounds;
 public interface CollisionListener {
 	
 	/**
-	 * @param ballBounds 
-	 * @param objectBounds 
+	 * @param node 
+	 * @param bounds 
 	 */
-	public void onCollision(Bounds ballBounds, Bounds objectBounds);
+	public void onCollisionStart(Node node, Bounds bounds);
 	
 	/**
-	 * @param ballBounds 
-	 * @param objectBounds 
+	 * @param node 
+	 * @param bounds 
 	 */
-	public void onCollisionStart(Bounds ballBounds, Bounds objectBounds);
-	
-	/**
-	 * @param ballBounds 
-	 * @param objectBounds 
-	 */
-	public void onCollisionEnd(Bounds ballBounds, Bounds objectBounds);
+	public void onCollisionEnd(Node node, Bounds bounds);
 	
 }
