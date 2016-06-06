@@ -1,8 +1,6 @@
 import java.util.Enumeration;
 import javax.media.j3d.*;
 
-import com.sun.j3d.utils.geometry.Primitive;
-
 /**
  * @author OKD
  *

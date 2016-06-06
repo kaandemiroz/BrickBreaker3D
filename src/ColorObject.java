@@ -66,6 +66,9 @@ public class ColorObject extends BranchGroup{
 		tg.setTransform(transform);
 	}
 	
+	/**
+	 * @return the transform group of this branch group
+	 */
 	public TransformGroup getTransformGroup(){
 		return tg;
 	}
@@ -113,21 +116,21 @@ public class ColorObject extends BranchGroup{
 	}
 	
 	/**
-	 * @return
+	 * @return the x coordinate of the transform group
 	 */
 	public float getX(){
 		return getTranslation().getX();
 	}
 	
 	/**
-	 * @return
+	 * @return the y coordinate of the transform group
 	 */
 	public float getY(){
 		return getTranslation().getY();
 	}
 	
 	/**
-	 * @return
+	 * @return the z coordinate of the transform group
 	 */
 	public float getZ(){
 		return getTranslation().getZ();

@@ -21,8 +21,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
-import java.util.Enumeration;
-import java.util.Random;
 
 /**
  * @author OKD
@@ -154,7 +152,6 @@ public class BrickBreaker extends Applet implements KeyListener, MouseMotionList
 		ballDelta = new Vector3f(0.0001f,0.0002f,0.0001f);
 		timer = new Timer(Constants.TIMER_GAP, new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				//	ball.rotate(0.1);
 				ball.move(ballDelta);
 			}
 		});
@@ -269,8 +266,7 @@ public class BrickBreaker extends Applet implements KeyListener, MouseMotionList
 		else if(shape.getBounds().equals(box.getShape(Box.BACK).getBounds())) return Constants.FROM_BELOW;
 		else if(shape.getBounds().equals(box.getShape(Box.TOP).getBounds())) return Constants.FROM_BACK;
 		else if(shape.getBounds().equals(box.getShape(Box.BOTTOM).getBounds())) return Constants.FROM_FRONT;
-		
-		return 0;
+		else return 0;
 	}
 
 	@Override
